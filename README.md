@@ -11,10 +11,10 @@ This template has been changed to use zabbix trapper, so all keys (including dis
 
 # Installation
 1. Import zabbix template to zabbix and link it to the windows server host.
-2. Copy scripts to zabbix agent folder c:\zabbix\scripts\.
-3. Copy zabbix agent configuration to c:\zabbix\zabbix_agentd.conf.d\.
-4. Also check settings in all copied file: connection string in mssqljobs.ps1 and other settings in mssqljobs.bat.
-5. Include agent configuration in zabbix_agentd.win.conf
+2. Copy scripts to zabbix agent folder ```c:\zabbix\scripts\```.
+3. Copy zabbix agent configuration to ```c:\zabbix\zabbix_agentd.conf.d\```.
+4. Also check settings in all copied file: connection string in ```mssqljobs.ps1``` and other settings in ```mssqljobs.bat```.
+5. Include agent configuration in ```zabbix_agentd.win.conf```
 ```Include=c:\zabbix\zabbix_agentd.conf.d\*.conf```
 5. Restart zabbix agent.
 
