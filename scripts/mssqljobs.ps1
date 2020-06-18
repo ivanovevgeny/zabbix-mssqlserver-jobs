@@ -2,6 +2,7 @@
 $SQLServer = "(local)"#$(hostname.exe)
 $uid = "zabbix"
 $pass = "zabbix"
+$outputFile = $args[0]
 
 #Создаем подключение к MSSQL / Create a connection to MSSQL
 
@@ -125,4 +126,4 @@ foreach ($row in $values)
 $res = ($discovery + "`n" + $line).Trim()
 #write-host $res
 $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
-[System.IO.File]::WriteAllLines("c:\zabbix\scripts\data.txt", $res, $Utf8NoBomEncoding)
+[System.IO.File]::WriteAllLines($outputFile, $res, $Utf8NoBomEncoding)
