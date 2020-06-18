@@ -34,13 +34,13 @@ This template has been changed to use zabbix trapper, so all keys (including dis
 - Job ServerName
 
 **Triggers**
-- Job {#JOBNAME} Is NOT Enabled
-- Job {#JOBNAME} Is NOT Scheduled
-- Job {#JOBNAME} Last Run Status NOT Succeeded
-- Job {#JOBNAME} Last Run was more than a 1 HOUR ago
-- Job {#JOBNAME} Last Run was more than a 2 HOURS ago
-- Job {#JOBNAME} Last Run was more than a MONTH ago
-- Job {#JOBNAME} Last Run was more than a WEEK ago
-- Job {#JOBNAME} Last Run was more than ONE DAY ago
+- Job Is NOT Enabled
+- Job Is NOT Scheduled
+- Job Last Run Status NOT Succeeded
+- Job Last Run was more than a 1 HOUR ago
+- Job Last Run was more than a 2 HOURS ago
+- Job Last Run was more than a MONTH ago
+- Job Last Run was more than a WEEK ago
+- Job Last Run was more than ONE DAY ago
 
 Note: most triggers are created for personal use, you can write your own by analogy
