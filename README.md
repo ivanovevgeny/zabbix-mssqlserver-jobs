@@ -1,9 +1,12 @@
 # zabbix-mssqlserver-jobs
 Template for sql server jobs monitoring.
+
 Uses a powershell script and zabbix_sender, called on zabbix-agent.
+
 Tested on Windows Server 2016, MS SQL Server 2017, Zabbix 5.0.
 
 Based on https://internet-lab.ru/zabbix_template_mssql_2014_jobs, but the solution from this article based on multiple powershell calls, that why CPU load is about 4-5% with long time.
+
 This template has been changed to use zabbix trapper, so all keys (including discovery) are sent using a single call.
 
 # Installation
@@ -15,7 +18,7 @@ This template has been changed to use zabbix trapper, so all keys (including dis
 ```Include=c:\zabbix\zabbix_agentd.conf.d\*.conf```
 5. Restart zabbix agent.
 
-**Metrics**
+## Metrics ##
 - Job Created
 - Job Is Enabled
 - Job Is Scheduled
@@ -33,7 +36,7 @@ This template has been changed to use zabbix trapper, so all keys (including dis
 - Job Schedule Type
 - Job ServerName
 
-**Triggers**
+## Triggers ##
 - Job Is NOT Enabled
 - Job Is NOT Scheduled
 - Job Last Run Status NOT Succeeded
@@ -43,4 +46,4 @@ This template has been changed to use zabbix trapper, so all keys (including dis
 - Job Last Run was more than a WEEK ago
 - Job Last Run was more than ONE DAY ago
 
-Note: most triggers are created for personal use, you can write your own by analogy
+Note: most triggers are created for personal use, you can write your own by analogy.
