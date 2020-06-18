@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2020-06-18T07:06:46Z</date>
+    <groups>
+        <group>
+            <name>Templates/Databases</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template App MS SQL Jobs</template>
+            <name>Template App MS SQL Jobs</name>
+            <groups>
+                <group>
+                    <name>Templates/Databases</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>MS SQL Jobs</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>mssqljobs.zabbix sender</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>mssqljobs.zabbix.sender</key>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>A script to send mssql jobs stats</description>
+                    <applications>
+                        <application>
+                            <name>MS SQL Jobs</name>
+                        </application>
+                    </applications>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>MS SQL Job Discovery</name>
+                    <type>TRAP</type>
+                    <key>mssql.job.discovery</key>
+                    <delay>0</delay>
+                    <lifetime>1d</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Created</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},created]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <description>Job created date</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Is Enabled</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},is_enabled]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <description>Job is enabled</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;&gt;1</expression>
+                                    <name>Job  {#JOBNAME} Is NOT Enabled</name>
+                                    <priority>WARNING</priority>
+                                    <description>Job Is NOT Enabled</description>
+                                    <manual_close>YES</manual_close>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Is Scheduled</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},is_scheduled]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <description>Job is scheduled</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;&gt;1</expression>
+                                    <name>Job  {#JOBNAME} Is NOT Scheduled</name>
+                                    <priority>WARNING</priority>
+                                    <description>Job Is NOT Scheduled</description>
+                                    <manual_close>YES</manual_close>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Last Run</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},last_run]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <description>Job last run</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Last Run Duration</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},last_run_duration]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <description>Job lust run duration</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Last Run Status</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},last_run_status]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <description>Job lust run status:&#13;
+0 ⇒ Failed&#13;
+1 ⇒ Succeeded&#13;
+2 ⇒ Retry&#13;
+3 ⇒ Canceled&#13;
+5 ⇒ Unknown</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                            <valuemap>
+                                <name>SQL Server Last Run Status</name>
+                            </valuemap>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;&gt;1</expression>
+                                    <name>Job  {#JOBNAME} Last Run Status NOT Succeeded</name>
+                                    <priority>HIGH</priority>
+                                    <description>Job Last Run Status NOT Succeeded</description>
+                                    <manual_close>YES</manual_close>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Last Run Timestamp</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},last_run_timestamp]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <description>Job last run in unix timestamp</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Message</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},message]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <description>Job message</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Modified</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},modified]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <description>Job modified date</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Next Run</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},next_run]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <description>Job next run</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Schedule Interval</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},schedule_interval]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <description>Job Schedule Interval</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Schedule Recurrence Factor</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},schedule_recurrence_factor]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <description>Job Schedule Recurrence Factor</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Schedule Subday Interval</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},schedule_subday_interval]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <description>Job Schedule Subday Interval</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Schedule Subday Type</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},schedule_subday_type]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>90d</trends>
+                            <description>Job Schedule Subday Type</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} Schedule Type</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},schedule_type]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <description>Job Schedule Type:&#13;
+1 ⇒ One Time&#13;
+4 ⇒ Daily&#13;
+8 ⇒ Weekly&#13;
+16 ⇒ Monthly&#13;
+32 ⇒ Monthly - Relative to Frequency Interval&#13;
+64 ⇒ Start automatically when SQL Server Agent starts&#13;
+128 ⇒ Start whenever the CPUs become idle&#13;
+0 ⇒ Not scheduled</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                            <valuemap>
+                                <name>SQL Server Schedule Type</name>
+                            </valuemap>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Job {#JOBNAME} ServerName</name>
+                            <type>TRAP</type>
+                            <key>mssql.job.info[{#JOBNAME},servername]</key>
+                            <delay>0</delay>
+                            <history>30d</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <description>Job Server Name</description>
+                            <applications>
+                                <application>
+                                    <name>MS SQL Jobs</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                    </item_prototypes>
+                    <trigger_prototypes>
+                        <trigger_prototype>
+                            <expression>{Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_type].last()}=4 and {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_interval].last()}=1 and {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_subday_type].last()}=8 and {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_subday_interval].last()}=1 and {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},last_run_timestamp].fuzzytime(86400)}=0</expression>
+                            <name>Job {#JOBNAME} Last Run was more than a 1 HOUR ago</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_type].last()}=4 and {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_interval].last()}=1 and {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_subday_type].last()}=8 and {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_subday_interval].last()}=2 and {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},last_run_timestamp].fuzzytime(86400)}=0</expression>
+                            <name>Job {#JOBNAME} Last Run was more than a 2 HOURS ago</name>
+                            <priority>AVERAGE</priority>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>({Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_type].last()}=16 or  {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_type].last()}=32) and {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},last_run_timestamp].fuzzytime(44641h)}=0</expression>
+                            <name>Job {#JOBNAME} Last Run was more than a MONTH ago</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_type].last()}=8 and {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},last_run_timestamp].fuzzytime(169h)}=0</expression>
+                            <name>Job {#JOBNAME} Last Run was more than a WEEK ago</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_type].last()}=4 and {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_interval].last()}=1 and {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},schedule_subday_type].last()}=1 and {Template App MS SQL Jobs:mssql.job.info[{#JOBNAME},last_run_timestamp].fuzzytime(25h)}=0</expression>
+                            <name>Job {#JOBNAME} Last Run was more than ONE DAY ago</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger_prototype>
+                    </trigger_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+    </templates>
+    <value_maps>
+        <value_map>
+            <name>SQL Server Last Run Status</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>Failed</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>Succeeded</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>Retry</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>Canceled</newvalue>
+                </mapping>
+                <mapping>
+                    <value>5</value>
+                    <newvalue>Unknown</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>SQL Server Schedule Type</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>Not scheduled</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>One Time</newvalue>
+                </mapping>
+                <mapping>
+                    <value>4</value>
+                    <newvalue>Daily</newvalue>
+                </mapping>
+                <mapping>
+                    <value>8</value>
+                    <newvalue>Weekly</newvalue>
+                </mapping>
+                <mapping>
+                    <value>16</value>
+                    <newvalue>Monthly</newvalue>
+                </mapping>
+                <mapping>
+                    <value>32</value>
+                    <newvalue>Monthly - Relative to Frequency Interval</newvalue>
+                </mapping>
+                <mapping>
+                    <value>64</value>
+                    <newvalue>Start automatically when SQL Server Agent starts</newvalue>
+                </mapping>
+                <mapping>
+                    <value>128</value>
+                    <newvalue>Start whenever the CPUs become idle</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+    </value_maps>
+</zabbix_export>
