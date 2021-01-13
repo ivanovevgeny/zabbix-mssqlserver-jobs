@@ -55,7 +55,8 @@ $SqlCmd.CommandText = "
 		,ISNULL(CONVERT(VARCHAR, CONVERT(DATETIME, RTRIM(run_date) + ' ' + STUFF(STUFF(REPLACE(STR(RTRIM(h.run_time),6,0),' ','0'),3,0,':'),6,0,':')), 121),'') AS 'LAST_RUN' 
 		,ISNULL(CONVERT(VARCHAR, DATEDIFF(SECOND, {d '1970-01-01'}, CONVERT(DATETIME, RTRIM(run_date) + ' ' + STUFF(STUFF(REPLACE(STR(RTRIM(h.run_time),6,0),' ','0'),3,0,':'),6,0,':')))), '0') AS 'LAST_RUN_TIMESTAMP' 
 		,ISNULL(LTRIM(RTRIM(STR([sJSTP].Last_run_outcome))), '') AS 'LAST_RUN_STATUS' 
-		,ISNULL(STUFF(STUFF(REPLACE(STR([sJSTP].last_run_duration,7,0),' ','0'),4,0,':'),7,0,':'), '') AS 'LAST_RUN_DURATION' 
+		--,ISNULL(STUFF(STUFF(REPLACE(STR([sJSTP].last_run_duration,7,0),' ','0'),4,0,':'),7,0,':'), '') AS 'LAST_RUN_DURATION' 
+		,(([sJSTP].last_run_duration/10000*3600 + ([sJSTP].last_run_duration/100)%100*60) + ([sJSTP].last_run_duration%100)) AS 'LAST_RUN_DURATION'
 		,ISNULL(CONVERT(VARCHAR,  CONVERT(DATETIME, RTRIM(NULLIF([sJOBSCH].next_run_date, 0)) +' '+ STUFF(STUFF(REPLACE(STR(RTRIM([sJOBSCH].next_run_time),6,0),' ','0'),3,0,':'),6,0,':')), 121), '') AS 'NEXT_RUN' 
 		,ISNULL(h.Message, '') AS 'MESSAGE' 
 	FROM
@@ -118,7 +119,7 @@ foreach ($row in $values)
     $line+= "- mssql.job.info[" + $row.JOB_NAME + ",last_run] '" + $row.LAST_RUN + "'`n" 
     $line+= "- mssql.job.info[" + $row.JOB_NAME + ",last_run_timestamp] " + $row.LAST_RUN_TIMESTAMP + "`n" 
     $line+= "- mssql.job.info[" + $row.JOB_NAME + ",last_run_status] " + $row.LAST_RUN_STATUS  + "`n" 
-    $line+= "- mssql.job.info[" + $row.JOB_NAME + ",last_run_duration] '" + $row.LAST_RUN_DURATION + "'`n" 
+    $line+= "- mssql.job.info[" + $row.JOB_NAME + ",last_run_duration] " + $row.LAST_RUN_DURATION + "`n" 
     $line+= "- mssql.job.info[" + $row.JOB_NAME + ",next_run] '" + $row.NEXT_RUN + "'`n" 
     $line+= "- mssql.job.info[" + $row.JOB_NAME + ",message] '" + $row.MESSAGE + "'`n" 
 }

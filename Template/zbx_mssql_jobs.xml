@@ -128,7 +128,6 @@
                             <delay>0</delay>
                             <history>30d</history>
                             <trends>0</trends>
-                            <value_type>TEXT</value_type>
                             <description>Job lust run duration</description>
                             <applications>
                                 <application>
